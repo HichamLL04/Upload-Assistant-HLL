@@ -347,6 +347,12 @@ class DescriptionBuilder:
             except Exception:
                 pass
 
+        # Check if filelist has any video files
+        # This is needed for disc-based formats (DVD, Blu-ray) which have empty filelists
+        filelist = meta.get("filelist", [])
+        if not filelist:
+            return ""
+
         video_file = meta["filelist"][0]
         mi_template = os.path.join(meta["base_dir"], "data", "templates", "MEDIAINFO.txt")
         mi_file_path = os.path.join(cache_file_dir, "MEDIAINFO_CLEANPATH.txt")
